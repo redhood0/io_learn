@@ -29,7 +29,6 @@ public class Directory {
     // A two-tuple for returing a pair of objects;
     public static class TreeInfo implements Iterable<File> {
 
-        static TreeInfo result = new TreeInfo();
 
         public List<File> files = new ArrayList<>(10);
         public List<File> dirs = new ArrayList<>(10);
@@ -41,60 +40,63 @@ public class Directory {
 
         void addAll(TreeInfo other) {
             files.addAll(other.files);
-            files.addAll(other.dirs);
+            dirs.addAll(other.dirs);
         }
 
         @Override
         public String toString() {
-            return "dirs:" + dirs +
-                    "\n\nfiles:" + files;
-        }
-
-        //recurse递归---recurse--recurse--recurse
-        static TreeInfo recurseDirs(File startDir, String regex) {
-            //TreeInfo result = new TreeInfo();
-            for (File item : startDir.listFiles()) {
-                if (item.isDirectory()) {
-                    System.out.println(item + "  is directory");
-                    result.dirs.add(item);
-                    result.addAll(recurseDirs(item, regex));
-                } else {
-                    if (item.getName().matches(regex)) {
-                        System.out.println(item + "  is file");
-                        result.files.add(item);
-                    }
-                }
-            }
-            return result;
-        }
-
-        public static TreeInfo walk(String start, String regex) {
-            return recurseDirs(new File(start), regex);
-        }
-
-        public static TreeInfo walk(File start, String regex) {
-            return recurseDirs(start, regex);
-        }
-
-        public static TreeInfo walk(File start) {
-            return recurseDirs(start,".*");
-        }
-
-        public static TreeInfo walk(String start) {
-            return recurseDirs(new File(start),".*");
+            return "dirs:" + PPrint.pformat(dirs) +
+                    "\n\nfiles:" + PPrint.pformat(files);
         }
 
         @Override
         public void forEach(Consumer<? super File> action) {
-
         }
-
         @Override
-        public Spliterator<File> spliterator() {
-            return null;
-        }
-        public static void main(String[] args) {
-            System.out.println(walk("./out"));
+        public Spliterator<File> spliterator() { return null;
         }
     }
+
+    //recurse递归---recurse--recurse--recurse
+    static TreeInfo recurseDirs(File startDir, String regex) {
+        TreeInfo result = new TreeInfo();
+        if (startDir.listFiles().length == 0) {
+
+        }
+        for (File item : startDir.listFiles()) {
+            if (item.isDirectory()) {
+                //System.out.println(item + "  is directory");
+                result.dirs.add(item);
+                result.addAll(recurseDirs(item, regex));
+            } else {
+                if (item.getName().matches(regex)) {
+                    //System.out.println(item + "  is file");
+                    result.files.add(item);
+                }
+            }
+        }
+        return result;
+    }
+
+    public static TreeInfo walk(String start, String regex) {
+        return recurseDirs(new File(start), regex);
+    }
+
+    public static TreeInfo walk(File start, String regex) {
+        return recurseDirs(start, regex);
+    }
+
+    public static TreeInfo walk(File start) {
+        return recurseDirs(start, ".*");
+    }
+
+    public static TreeInfo walk(String start) {
+        return recurseDirs(new File(start), ".*");
+    }
+
+    public static void main(String[] args) {
+        TreeInfo s = walk("./src/test_package");
+        System.out.println(s);
+    }
+
 }
