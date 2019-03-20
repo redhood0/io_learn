@@ -48,13 +48,6 @@ public class Directory {
             return "dirs:" + PPrint.pformat(dirs) +
                     "\n\nfiles:" + PPrint.pformat(files);
         }
-
-        @Override
-        public void forEach(Consumer<? super File> action) {
-        }
-        @Override
-        public Spliterator<File> spliterator() { return null;
-        }
     }
 
     //recurse递归---recurse--recurse--recurse
