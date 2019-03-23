@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class BufferedInputFile {
     //Throw exceptions to console
+    //测试中文是否乱码
     public static String read(String filenam) throws IOException {
         //reading iput by line
         BufferedReader in = new BufferedReader(new FileReader(filenam));
