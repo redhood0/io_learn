@@ -29,7 +29,7 @@ class IO_exe7 {
         list.iterator();
         ListIterator<String> listIterator = list.listIterator(list.size());
         while(listIterator.hasPrevious()){
-            System.out.println(listIterator.previous());
+            System.out.println(listIterator.previous().toLowerCase());
         }
     }
 
