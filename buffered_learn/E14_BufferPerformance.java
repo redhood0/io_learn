@@ -3,7 +3,7 @@ package file_class.buffered_learn;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
+//责任人
 public class E14_BufferPerformance {
     static String file = "E14_BufferPerformance.out";
 

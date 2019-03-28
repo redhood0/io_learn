@@ -30,7 +30,7 @@ public class TextFile extends ArrayList<String> {
     //write a single file in one method call
     public static void write(String fileName, String text) {
         try {
-            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(new File(fileName).getAbsoluteFile())));
+            PrintWriter out = new PrintWriter(new File(fileName).getAbsoluteFile());//TODO:
             try {
                 out.write(text);
             } finally {
