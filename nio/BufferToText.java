@@ -53,3 +53,7 @@ public class BufferToText {
         System.out.println(bf.asCharBuffer());
     }
 }
+
+//缓冲器容纳的是普通的字节，为了把它们转换成字符，我们要么在输入他们的时候对其进行编码（这样它们输出时才有意义）
+//要么在将其从缓冲器输出是对它们进行比解码。可以使用java。nio。charSet类实现这些功能，该类提供了把数据编码成多种
+//不同类型的字符集的工具
