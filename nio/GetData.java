@@ -2,6 +2,7 @@ package file_class.nio;
 
 import java.nio.ByteBuffer;
 
+//只适用于基本数据类型
 public class GetData {
     private static final int BSIZE = 1024;
 
