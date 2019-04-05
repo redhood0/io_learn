@@ -2,10 +2,8 @@ package file_class.zip;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.util.zip.Adler32;
-import java.util.zip.CheckedOutputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import java.util.Enumeration;
+import java.util.zip.*;
 
 /**
  * zip压缩包的创建，构造方法提供编码级，可以为汉字服务。
@@ -40,10 +38,33 @@ public class ZipCompress {
         //---------------------------------------------------------------------------------
         //Now extract the files:
         System.out.println("Reading file");
+        FileInputStream fis = new FileInputStream("test.zip");
+        CheckedInputStream checkedInputStream = new CheckedInputStream(fis,new Adler32());
+        ZipInputStream zis = new ZipInputStream(checkedInputStream);
+        BufferedInputStream bis = new BufferedInputStream(zis);
 
 
+       // ZipEntry zipEntry = zis.getNextEntry();
+        ZipEntry zipEntry;
+        while((zipEntry = zis.getNextEntry()) != null){
+            System.out.println("read file : " + zipEntry.getName() + " / " + zipEntry.getComment() + " / " + zipEntry.getSize());
+            int x;
+//            while((x = bis.read()) != -1){
+//                System.out.println(x);
+//            }
+        }
+        bis.close();
 
+        //Alternative替代 way to open and read Zip files
+        ZipFile zf = new ZipFile("test.zip");
+        Enumeration<ZipEntry> e = (Enumeration<ZipEntry>) zf.entries();//entry的复数形式,条目
+        while(e.hasMoreElements()){
+            ZipEntry ze2 = e.nextElement();
+            System.out.println("File:" + ze2.getSize());
+            // ... and extract the data as before
 
+        }
+         System.out.println("test checksum: " + checkedInputStream.getChecksum().getValue());
 
     }
 }
